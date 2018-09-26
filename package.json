@@ -1,0 +1,42 @@
+{
+  "name": "vue-typescript",
+  "version": "1.0.0",
+  "description": "vue-typescript",
+  "main": "./src/index.ts",
+  "scripts": {
+    "build": "webpack",
+    "dev": "webpack-dev-server --hot --port 9001",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/seriouslag/vue-typescript.git"
+  },
+  "author": "Landon Gavin",
+  "license": "none",
+  "bugs": {
+    "url": "https://github.com/seriouslag/vue-typescript/issues"
+  },
+  "homepage": "https://github.com/seriouslag/vue-typescript#readme",
+  "devDependencies": {
+    "css-loader": "^1.0.0",
+    "node-sass": "^4.9.3",
+    "sass-loader": "^7.1.0",
+    "ts-loader": "^4.5.0",
+    "tslint": "^5.11.0",
+    "tslint-config-airbnb": "^5.11.0",
+    "vue-loader": "^15.4.2",
+    "vue-template-compiler": "^2.5.17",
+    "webpack": "^4.20.2",
+    "webpack-cli": "^3.1.1",
+    "webpack-dev-server": "^3.1.9"
+  },
+  "dependencies": {
+    "axios": "^0.18.0",
+    "typescript": "^3.0.3",
+    "vue": "^2.5.17",
+    "vue-class-component": "^6.2.0",
+    "vue-property-decorator": "^7.1.1",
+    "vuex": "^3.0.1"
+  }
+}
