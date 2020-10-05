@@ -2,54 +2,48 @@
 <template>
 <div>
     <div class="greeting">Hello {{name}}{{exclamationMarks}}</div>
-    <button v-bind:disabled="enthusiasm <= 0" @click="decrement">-</button>
+    <button :disabled="isDecrementDisabled" @click="decrement">-</button>
     <button @click="increment">+</button>
     {{ sayHello }}
 </div>
 </template>
 
 <script lang="ts">
-import { Vue, Component, Prop } from "vue-property-decorator";
+import { defineComponent, computed } from 'vue';
 
-@Component
-export default class Hello extends Vue {
-    @Prop() name!: string;
-    @Prop() initialEnthusiasm!: number;
-    private enthusiasm: number = this.initialEnthusiasm;
-
-    mounted() {
-        this.$store.dispatch('appState/setCount', this.initialEnthusiasm);
-    }
-    
-    increment(): void {
-        this.$store.dispatch('appState/setCount', ++this.enthusiasm);
-    }
-    decrement(): void {
-        this.$store.dispatch('appState/setCount', !!this.enthusiasm ? --this.enthusiasm : 0);
-    }
-
-    get sayHello(): string {
-        return "Count " + this.count;
-    }
-
-    get getEnthusiasm(): number {
-        return this.enthusiasm;
-    }
-
-    get exclamationMarks(): string {
-        let returnString = "";
-        if(this.enthusiasm) {
-            for(let i = 0; i < this.count; i++) {
-                returnString += '!';
-            }
+export default defineComponent({
+  props: {
+    name: {
+      type: String,
+    },
+    enthusiasm: {
+      type: Number,
+      required: true,
+    },
+  },
+  setup (props, ctx) {
+    const increment = () => ctx.emit('increment');
+    const decrement = () => ctx.emit('decrement');
+    const sayHello = computed(() => `Count ${props.enthusiasm}`);
+    const exclamationMarks = computed(() => {
+      let returnString = '';
+      if (props.enthusiasm) {
+        for(let i = 0; i < props.enthusiasm; i++) {
+          returnString += '!';
         }
-        return returnString;
-    }
-
-    get count(): Number {
-        return this.$store.getters['appState/getCount'];
-    }
-}
+      }
+      return returnString;
+    });
+    const isDecrementDisabled = computed(() => props.enthusiasm <= 0);
+    return {
+      increment,
+      decrement,
+      sayHello,
+      exclamationMarks,
+      isDecrementDisabled,
+    };
+  },
+});
 </script>
 
 <style lang="scss">

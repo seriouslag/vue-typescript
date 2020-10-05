@@ -1,42 +1,29 @@
 <template>
 <div>
-    <Hello initialEnthusiasm="1" name="World" />
+  <hello
+    :enthusiasm="enthusiasm"
+    :name="name"
+    @increment="increment"
+    @decrement="decrement"
+  />
 </div>
 </template>
 
 <script lang="ts">
-import Vue from 'vue'
-import Component from 'vue-class-component'
+import { defineComponent, ref } from 'vue';
 import Hello from './components/Hello.vue';
-// We declare the props separately
-// to make props types inferable.
-const AppProps = Vue.extend({
-  props: {
-    propMessage: String
-  }
-});
+import Enthusiasm from './logic/enthusiasm';
 
-@Component({
+export default defineComponent({
   components: {
-    Hello: Hello,
-  }
-})
-
-export default class App extends AppProps {
-  // inital data
-  msg: number = 123
-  // use prop values for initial data
-  helloMsg: string = 'Hello, ' + this.propMessage
-  // lifecycle hook
-  mounted () {
-    this.greet()
-  };
-  // computed
-  get computedMsg () {
-    return 'computed ' + this.msg
-  };
-  // method
-  greet () {
-  };
-}
+    Hello,
+  },
+  setup (_props, _ctx) {
+    const name = ref('World');
+    return {
+      name,
+      ...Enthusiasm(),
+    };
+  },
+});
 </script>
